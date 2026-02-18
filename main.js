@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loginSubmit.addEventListener('click', () => {
-        if (passwordInput.value === 'admin1234') {
+        if (passwordInput.value === '1234') {
             alert('관리자 모드로 진입합니다.');
             adminModal.style.display = 'none';
             // 추후 관리자 전용 대시보드 연결 가능
