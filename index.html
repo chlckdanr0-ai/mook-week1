@@ -1,38 +1,41 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>꽃 이름 식별기</title>
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Google AI SDK -->
-    <script type="module">
-        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
-        window.GoogleGenerativeAI = GoogleGenerativeAI;
-    </script>
-</head>
-<body>
-
-    <div class="card">
-        <h1>🌸 꽃 이름이 뭘까요?</h1>
-        <p class="subtitle">꽃 사진을 올려 바로 확인해보세요</p>
-
-        <div class="upload-container">
-            <label class="upload-btn">
-                꽃 사진 올리기
-                <input type="file" accept="image/*" onchange="processImage(event)">
-            </label>
-        </div>
-
-        <img id="preview">
-        
-        <div id="result">
-            <span class="result-title" id="flower-name-display">꽃 이름을 분석 중...</span>
-            <p class="result-desc" id="flower-description"></p>
-        </div>
-    </div>
-
-    <script src="main.js"></script>
-</body>
-</html>
+      <!DOCTYPE html>
+      <html lang="ko">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>꽃 이름 식별기</title>
+          <link rel="stylesheet" href="style.css">
+          
+          <!-- Google AI SDK (변경됨) -->
+          <script src="https://sdk.export.workers.dev/ga4.js
+"></script>
+          <script type="module" src="main_v2.js"></script>
+          
+      </head>
+      <body>
+      
+          <div class="card">
+              <h1>🌸 꽃 이름이 뭘까요?</h1>
+              <p class="subtitle">꽃 사진을 올려 바로 확인해보세요</p>
+      
+              <div class="upload-container">
+                  <label class="upload-btn">
+                      꽃 사진 올리기
+                      <input type="file" accept="image/*" onchange="processImage(event)">
+                  </label>
+              </div>
+      
+              <div class="preview-container">
+                  <img id="preview" style="display: none;" alt="꽃 사진 미리보기">
+              </div>
+      
+              <div id="result" style="display: none;">
+                  <h2 id="flower-name-display">결과</h2>
+                  <p id="flower-description">설명</p>
+              </div>
+      
+          </div>
+          
+      </body>
+      </html>
+      
