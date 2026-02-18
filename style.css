@@ -1,1 +1,81 @@
-/* Add styles here */
+/* 전체 배경 & 폰트 */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #F1E0C5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* 카드 레이아웃 */
+  .card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: center;
+    width: 380px;
+  }
+  
+  /* 제목 스타일 */
+  h1 {
+    color: #71816D;
+    margin-bottom: 25px;
+    font-size: 22px;
+  }
+  
+  /* 업로드 버튼 */
+  .upload-btn {
+    background-color: #71816D;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px; /* 둥글게 */
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-block;
+  }
+  
+  .upload-btn:hover {
+    opacity: 0.85;
+  }
+  
+  /* 실제 파일 input 숨김 */
+  input[type="file"] {
+    display: none;
+  }
+  
+  /* 업로드 이미지 */
+  img {
+    margin-top: 20px;
+    max-width: 100%;
+    border-radius: 15px;
+    display: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  }
+  
+  /* 결과 텍스트 */
+  #result {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+    line-height: 1.5;
+  }
+  
+  /* 관리자 확인 중 메시지 */
+  #result.pending {
+    color: #71816D;
+    font-style: italic;
+  }
+  
+  /* 로딩 메시지 */
+  .loading {
+    margin-top: 15px;
+    color: #71816D;
+    font-size: 14px;
+  }
+  
