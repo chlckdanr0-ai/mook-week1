@@ -1,148 +1,109 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Flower Drying Guide</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Drying Guide</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_BUCKET",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.db = db;
-window.doc = doc;
-window.getDoc = getDoc;
-window.setDoc = setDoc;
-</script>
-
-<style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #F1E0C5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.card {
-  background: white;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  text-align: center;
-  width: 380px;
-}
-
-h1 { color: #71816D; }
-
-.upload-btn {
-  background-color: #71816D;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 50px;
-  cursor: pointer;
-  display: inline-block;
-}
-
-input[type="file"] { display: none; }
-
-img {
-  margin-top: 20px;
-  max-width: 100%;
-  border-radius: 15px;
-  display: none;
-}
-
-#result { margin-top: 20px; }
-</style>
+        window.db = db;
+        window.doc = doc;
+        window.getDoc = getDoc;
+        window.setDoc = setDoc;
+    </script>
 </head>
 <body>
 
-<div class="card">
-  <h1>🌸 꽃 건조 가이드</h1>
+    <button id="theme-toggle" class="theme-toggle">🌙 다크 모드</button>
 
-  <label class="upload-btn">
-    사진 선택
-    <input type="file" accept="image/*" onchange="loadImage(event)">
-  </label>
+    <div class="card">
+        <h1>🌸 꽃 건조 가이드</h1>
 
-  <img id="preview">
-  <div id="result"></div>
-</div>
+        <label class="upload-btn">
+            사진 선택
+            <input type="file" accept="image/*" onchange="loadImage(event)">
+        </label>
 
-<script>
-const MODEL_URL = "YOUR_MODEL_URL/"; 
-let model;
+        <img id="preview">
+        <div id="result"></div>
+    </div>
 
-async function init() {
-  if (!model) {
-    model = await tmImage.load(
-      MODEL_URL + "model.json",
-      MODEL_URL + "metadata.json"
-    );
-  }
-}
+    <script src="main.js"></script>
+    <script>
+        const MODEL_URL = "YOUR_MODEL_URL/"; 
+        let model;
 
-async function loadImage(event) {
-  const file = event.target.files[0];
-  if (!file) return;
+        async function init() {
+            if (!model) {
+                model = await tmImage.load(
+                    MODEL_URL + "model.json",
+                    MODEL_URL + "metadata.json"
+                );
+            }
+        }
 
-  const reader = new FileReader();
-  reader.onload = async function() {
-    const img = document.getElementById("preview");
-    img.src = reader.result;
-    img.style.display = "block";
+        async function loadImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-    await init();
+            const reader = new FileReader();
+            reader.onload = async function() {
+                const img = document.getElementById("preview");
+                img.src = reader.result;
+                img.style.display = "block";
 
-    const prediction = await model.predict(img);
-    prediction.sort((a, b) => b.probability - a.probability);
+                await init();
 
-    const flowerName = prediction[0].className;
-    await checkDryingPeriod(flowerName);
-  };
-  reader.readAsDataURL(file);
-}
+                const prediction = await model.predict(img);
+                prediction.sort((a, b) => b.probability - a.probability);
 
-async function checkDryingPeriod(name) {
-  const flowerRef = window.doc(window.db, "flowers", name);
-  const flowerSnap = await window.getDoc(flowerRef);
+                const flowerName = prediction[0].className;
+                await checkDryingPeriod(flowerName);
+            };
+            reader.readAsDataURL(file);
+        }
 
-  if (flowerSnap.exists() && flowerSnap.data().status === "approved") {
-    document.getElementById("result").innerHTML = `
-      🌸 <b>${name}</b><br>
-      🕒 건조 기간: ${flowerSnap.data().dryingPeriod}
-    `;
-  } else {
-    await window.setDoc(flowerRef, {
-      dryingPeriod: null,
-      status: "pending",
-      createdAt: new Date()
-    });
+        async function checkDryingPeriod(name) {
+            const flowerRef = window.doc(window.db, "flowers", name);
+            const flowerSnap = await window.getDoc(flowerRef);
 
-    document.getElementById("result").innerHTML = `
-      🌸 <b>${name}</b><br>
-      🕒 건조 기간: 관리자 확인 중입니다.
-    `;
-  }
-}
-</script>
+            if (flowerSnap.exists() && flowerSnap.data().status === "approved") {
+                document.getElementById("result").innerHTML = `
+                    🌸 <b>${name}</b><br>
+                    🕒 건조 기간: ${flowerSnap.data().dryingPeriod}
+                `;
+            } else {
+                await window.setDoc(flowerRef, {
+                    dryingPeriod: null,
+                    status: "pending",
+                    createdAt: new Date()
+                });
 
+                document.getElementById("result").innerHTML = `
+                    🌸 <b>${name}</b><br>
+                    🕒 건조 기간: 관리자 확인 중입니다.
+                `;
+            }
+        }
+    </script>
 </body>
 </html>
