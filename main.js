@@ -1,5 +1,5 @@
 // 1. Google AI API 키 설정 (본인의 키로 교체해야 합니다)
-const API_KEY = "AIzaSyCB7_w1ex01qiRZyCrYzBM2cB8Ln2v5sII";
+const API_KEY = "AIzaSyAWS6ftTyI2YF6YaPxaEgK-o1UP5kJYyGI";
 
 // 2. DOM 요소 가져오기
 const previewImg = document.getElementById("preview");
