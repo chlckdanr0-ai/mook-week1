@@ -47,6 +47,20 @@
         <div id="result"></div>
     </div>
 
+    <!-- 관리자 로그인 버튼 -->
+    <button id="admin-login-btn" class="admin-float-btn">🔑 관리자</button>
+
+    <!-- 관리자 로그인 모달/창 -->
+    <div id="admin-modal" class="admin-modal">
+        <div class="admin-modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>관리자 로그인</h3>
+            <input type="password" id="admin-password" placeholder="비밀번호 입력">
+            <button id="login-submit" class="upload-btn">로그인</button>
+            <p id="login-error" style="color: red; font-size: 12px; margin-top: 10px; display: none;">비밀번호가 틀렸습니다.</p>
+        </div>
+    </div>
+
     <script src="main.js"></script>
     <script>
         const MODEL_URL = "YOUR_MODEL_URL/"; 
