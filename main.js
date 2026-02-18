@@ -2,12 +2,16 @@
 const API_KEY = "AIzaSyAWS6ftTyI2YF6YaPxaEgK-o1UP5kJYyGI";
 
 // 2. DOM 요소 가져오기
+const fileUploadInput = document.getElementById("file-upload-input");
 const previewImg = document.getElementById("preview");
 const resultDiv = document.getElementById("result");
 const nameDisplay = document.getElementById("flower-name-display");
 const descriptionDisplay = document.getElementById("flower-description");
 
-// 3. 이미지 처리 및 AI 분석 함수
+// 3. 파일 업로드 버튼에 이벤트 리스너 추가
+fileUploadInput.addEventListener('change', processImage);
+
+// 4. 이미지 처리 및 AI 분석 함수
 async function processImage(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -57,7 +61,7 @@ async function processImage(event) {
     reader.readAsDataURL(file);
 }
 
-// 4. 파일 객체를 AI 모델이 이해하는 형식으로 변환하는 함수
+// 5. 파일 객체를 AI 모델이 이해하는 형식으로 변환하는 함수
 async function fileToGenerativePart(file) {
     const base64EncodedDataPromise = new Promise((resolve) => {
         const reader = new FileReader();
@@ -72,7 +76,7 @@ async function fileToGenerativePart(file) {
     };
 }
 
-// 5. 결과를 화면에 자연스럽게 타이핑하듯 표시하는 함수
+// 6. 결과를 화면에 자연스럽게 타이핑하듯 표시하는 함수
 function displayResult(text) {
     // Gemini가 생성한 텍스트에서 제목과 설명을 분리합니다.
     // (결과는 보통 "## [꽃 이름]\n\n설명..." 형식으로 나옵니다)

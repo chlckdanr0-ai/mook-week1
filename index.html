@@ -6,10 +6,9 @@
           <title>꽃 이름 식별기</title>
           <link rel="stylesheet" href="style.css">
           
-          <!-- Google AI SDK (변경됨) -->
-          <script src="https://sdk.export.workers.dev/ga4.js
-"></script>
-          <script type="module" src="main_v2.js"></script>
+          <!-- Google AI SDK -->
+          <script src="https://sdk.export.workers.dev/ga4.js"></script>
+          <script type="module" src="main.js"></script>
           
       </head>
       <body>
@@ -21,7 +20,8 @@
               <div class="upload-container">
                   <label class="upload-btn">
                       꽃 사진 올리기
-                      <input type="file" accept="image/*" onchange="processImage(event)">
+                      <!-- onchange 이벤트를 제거하고, id를 부여합니다 -->
+                      <input id="file-upload-input" type="file" accept="image/*">
                   </label>
               </div>
       
