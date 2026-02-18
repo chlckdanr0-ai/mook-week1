@@ -7,6 +7,15 @@
   --shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
+[data-theme="dark"] {
+  --main-color: #1a1a1a;
+  --sub-color: #8fa38a;
+  --card-bg: #2d2d2d;
+  --text-color: #f1f1f1;
+  --light-text: #cccccc;
+  --shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
 body {
   margin: 0;
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
@@ -78,7 +87,6 @@ h1 {
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 16px;
-  display: none;
   box-shadow: var(--shadow);
 }
 
@@ -90,20 +98,64 @@ h1 {
   background-color: rgba(113, 129, 109, 0.05);
   text-align: left;
   border-left: 4px solid var(--sub-color);
-  display: none;
 }
 
-.result-title {
+#flower-name-display {
   font-weight: 700;
   color: var(--sub-color);
   margin-bottom: 5px;
-  display: block;
+  font-size: 18px;
 }
 
-.result-desc {
+#flower-description {
   font-size: 15px;
   line-height: 1.6;
-  color: var(--light-text);
+}
+
+/* 제휴 문의 섹션 */
+.contact-section {
+    margin-top: 30px;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: #eee;
+    margin-bottom: 25px;
+}
+
+.contact-section h3 {
+    font-size: 16px;
+    color: var(--sub-color);
+    margin-bottom: 15px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+.contact-form textarea {
+    height: 80px;
+    resize: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--sub-color);
 }
 
 input[type="file"] {

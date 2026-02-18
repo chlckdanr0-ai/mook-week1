@@ -1,3 +1,6 @@
+// 0. Google AI 모듈 가져오기
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
 // 1. Google AI API 키 설정 (본인의 키로 교체해야 합니다)
 const API_KEY = "AIzaSyAWS6ftTyI2YF6YaPxaEgK-o1UP5kJYyGI";
 
@@ -33,8 +36,8 @@ async function processImage(event) {
         }
 
         try {
-            // Gemini AI 모델 실행
-            const genAI = new window.GoogleGenerativeAI(API_KEY);
+            // Gemini AI 모델 실행 (수정된 부분)
+            const genAI = new GoogleGenerativeAI(API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
             // 프롬프트 설정
@@ -79,15 +82,12 @@ async function fileToGenerativePart(file) {
 // 6. 결과를 화면에 자연스럽게 타이핑하듯 표시하는 함수
 function displayResult(text) {
     // Gemini가 생성한 텍스트에서 제목과 설명을 분리합니다.
-    // (결과는 보통 "## [꽃 이름]\n\n설명..." 형식으로 나옵니다)
     const lines = text.split('\n');
     let flowerName = "이름을 찾지 못했어요";
-    let description = text; // 기본값
+    let description = text; 
 
-    // 첫 번째 줄에서 이름 추출 시도
     if (lines.length > 0) {
         const potentialName = lines[0].replace(/\*\*/g, '').replace(/##/g, '').trim();
-        // 너무 길지 않은 경우만 이름으로 간주
         if (potentialName.length < 20) {
             flowerName = potentialName;
             description = lines.slice(1).join('\n').trim();
@@ -96,14 +96,13 @@ function displayResult(text) {
     
     nameDisplay.textContent = `🌸 ${flowerName}`;
 
-    // 설명 텍스트를 한 글자씩 타이핑
     let i = 0;
     descriptionDisplay.textContent = "";
     function typeWriter() {
         if (i < description.length) {
             descriptionDisplay.textContent += description.charAt(i);
             i++;
-            setTimeout(typeWriter, 25); // 타이핑 속도 (ms)
+            setTimeout(typeWriter, 25);
         }
     }
     typeWriter();
