@@ -36,9 +36,9 @@ async function processImage(event) {
         }
 
         try {
-            // Gemini AI 모델 실행 (수정된 부분: 모델 이름 변경)
+            // Gemini AI 모델 실행 (호환 가능한 모델로 변경)
             const genAI = new GoogleGenerativeAI(API_KEY);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+            const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
             // 프롬프트 설정
             const prompt = "이 사진에 있는 꽃의 이름과 간단한 설명을 알려줘. 한국어로 대답해줘.";
@@ -57,7 +57,7 @@ async function processImage(event) {
         } catch (error) {
             console.error("분석 중 오류 발생:", error);
             nameDisplay.textContent = "오류 발생! 원인을 확인해주세요.";
-            descriptionDisplay.textContent = `[상세 오류]: ${error.toString()}`;
+            descriptionDisplay.textContent = \`[상세 오류]: ${error.toString()}\`;
         }
     };
     reader.readAsDataURL(file);
@@ -80,19 +80,19 @@ async function fileToGenerativePart(file) {
 
 // 6. 결과를 화면에 자연스럽게 타이핑하듯 표시하는 함수
 function displayResult(text) {
-    const lines = text.split('\n');
+    const lines = text.split('\\n');
     let flowerName = "이름을 찾지 못했어요";
     let description = text; 
 
     if (lines.length > 0) {
-        const potentialName = lines[0].replace(/\*\*/g, '').replace(/##/g, '').trim();
+        const potentialName = lines[0].replace(/\\*\\*/g, '').replace(/##/g, '').trim();
         if (potentialName.length < 20) {
             flowerName = potentialName;
-            description = lines.slice(1).join('\n').trim();
+            description = lines.slice(1).join('\\n').trim();
         }
     }
     
-    nameDisplay.textContent = `🌸 ${flowerName}`;
+    nameDisplay.textContent = \`🌸 ${flowerName}\`;
 
     let i = 0;
     descriptionDisplay.textContent = "";
