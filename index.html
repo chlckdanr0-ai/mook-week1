@@ -3,45 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>꽃 건조 가이드 | Flower Drying Guide</title>
+    <title>꽃 이름 식별기</title>
     <link rel="stylesheet" href="style.css">
     
-    <!-- TensorFlow.js & Teachable Machine -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
-
-    <!-- Firebase -->
+    <!-- Google AI SDK -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_BUCKET",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // 전역 변수 설정
-        window.db = db;
-        window.doc = doc;
-        window.getDoc = getDoc;
-        window.setDoc = setDoc;
-        window.serverTimestamp = serverTimestamp;
+        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+        window.GoogleGenerativeAI = GoogleGenerativeAI;
     </script>
 </head>
 <body>
 
-    <button id="theme-toggle" class="theme-toggle">🌙 다크 모드</button>
-
     <div class="card">
-        <h1>🌸 꽃 건조 가이드</h1>
-        <p class="subtitle">꽃 사진을 올리면 건조 기간을 알려드려요</p>
+        <h1>🌸 꽃 이름이 뭘까요?</h1>
+        <p class="subtitle">꽃 사진을 올려 바로 확인해보세요</p>
 
         <div class="upload-container">
             <label class="upload-btn">
@@ -53,24 +28,8 @@
         <img id="preview">
         
         <div id="result">
-            <span class="result-title" id="flower-name-display">꽃 이름 분석 중...</span>
-            <div class="result-desc" id="drying-info-display">
-                분석 중입니다. 잠시만 기다려주세요.
-            </div>
-        </div>
-    </div>
-
-    <!-- 관리자 로그인 버튼 -->
-    <button id="admin-login-btn" class="admin-float-btn">🔑 관리자</button>
-
-    <!-- 관리자 로그인 모달 -->
-    <div id="admin-modal" class="admin-modal">
-        <div class="admin-modal-content">
-            <span class="close-btn">&times;</span>
-            <h3>관리자 로그인</h3>
-            <input type="password" id="admin-password" placeholder="비밀번호 입력">
-            <button id="login-submit" class="upload-btn">로그인</button>
-            <p id="login-error" style="color: #e74c3c; font-size: 13px; margin-top: 10px; display: none;">비밀번호가 틀렸습니다.</p>
+            <span class="result-title" id="flower-name-display">꽃 이름을 분석 중...</span>
+            <p class="result-desc" id="flower-description"></p>
         </div>
     </div>
 
