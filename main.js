@@ -36,7 +36,7 @@ async function processImage(event) {
         }
 
         try {
-            // Gemini AI 모델 실행 (수정된 부분)
+            // Gemini AI 모델 실행 (수정된 부분: window. 제거)
             const genAI = new GoogleGenerativeAI(API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
@@ -57,7 +57,6 @@ async function processImage(event) {
         } catch (error) {
             console.error("분석 중 오류 발생:", error);
             nameDisplay.textContent = "오류 발생! 원인을 확인해주세요.";
-            // 상세한 오류 내용을 화면에 직접 표시합니다.
             descriptionDisplay.textContent = `[상세 오류]: ${error.toString()}`;
         }
     };
@@ -81,7 +80,6 @@ async function fileToGenerativePart(file) {
 
 // 6. 결과를 화면에 자연스럽게 타이핑하듯 표시하는 함수
 function displayResult(text) {
-    // Gemini가 생성한 텍스트에서 제목과 설명을 분리합니다.
     const lines = text.split('\n');
     let flowerName = "이름을 찾지 못했어요";
     let description = text; 
