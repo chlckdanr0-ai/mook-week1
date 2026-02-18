@@ -1,132 +1,184 @@
 :root {
-  --bg-color: #F1E0C5;
+  --main-color: #F1E0C5;    /* 배경색 */
+  --sub-color: #71816D;     /* 주요 강조색 (버튼, 제목 등) */
   --card-bg: #ffffff;
   --text-color: #333333;
-  --primary-color: #71816D;
-  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --light-text: #666666;
+  --shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 [data-theme="dark"] {
-  --bg-color: #1a1a1a;
+  --main-color: #1a1a1a;
+  --sub-color: #8fa38a;
   --card-bg: #2d2d2d;
   --text-color: #f1f1f1;
-  --primary-color: #8fa38a;
+  --light-text: #cccccc;
   --shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* 전체 배경 & 폰트 */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: var(--bg-color);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  background-color: var(--main-color);
   color: var(--text-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+  transition: all 0.3s ease;
 }
 
-/* 카드 레이아웃 */
 .card {
   background: var(--card-bg);
   padding: 40px;
-  border-radius: 20px;
+  border-radius: 24px;
   box-shadow: var(--shadow);
   text-align: center;
-  width: 380px;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  width: 90%;
+  max-width: 400px;
+  transition: transform 0.3s ease, background-color 0.3s;
 }
 
-/* 제목 스타일 */
+.card:hover {
+  transform: translateY(-5px);
+}
+
 h1 {
-  color: var(--primary-color);
-  margin-bottom: 25px;
-  font-size: 22px;
+  color: var(--sub-color);
+  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-/* 업로드 버튼 */
+.subtitle {
+  color: var(--light-text);
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* 업로드 섹션 */
+.upload-container {
+  margin-bottom: 20px;
+}
+
 .upload-btn {
-  background-color: var(--primary-color);
+  background-color: var(--sub-color);
   color: white;
   border: none;
-  padding: 12px 25px;
+  padding: 14px 28px;
   border-radius: 50px;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
   display: inline-block;
+  box-shadow: 0 4px 15px rgba(113, 129, 109, 0.3);
 }
 
 .upload-btn:hover {
-  opacity: 0.85;
+  opacity: 0.9;
+  transform: scale(1.02);
 }
 
-/* 테마 토글 버튼 */
+/* 이미지 미리보기 */
+#preview {
+  margin-top: 25px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+  display: none;
+  box-shadow: var(--shadow);
+}
+
+/* 결과창 */
+#result {
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 16px;
+  background-color: rgba(113, 129, 109, 0.05);
+  text-align: left;
+  border-left: 4px solid var(--sub-color);
+  display: none;
+}
+
+.result-title {
+  font-weight: 700;
+  color: var(--sub-color);
+  margin-bottom: 5px;
+  display: block;
+}
+
+.result-desc {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* 테마 토글 */
 .theme-toggle {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
   background: var(--card-bg);
   color: var(--text-color);
-  border: 1px solid var(--primary-color);
-  padding: 8px 16px;
-  border-radius: 20px;
+  border: 1px solid var(--sub-color);
+  padding: 10px 18px;
+  border-radius: 30px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 500;
   transition: 0.3s;
+  z-index: 1000;
 }
 
 /* 관리자 플로팅 버튼 */
 .admin-float-btn {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   right: 20px;
-  background: var(--primary-color);
+  background: var(--sub-color);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 12px 20px;
+  border-radius: 30px;
   cursor: pointer;
   font-size: 14px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   transition: 0.3s;
 }
 
-/* 관리자 모달 */
+/* 모달 스타일 생략 (기존 유지하되 색상 변수 적용) */
 .admin-modal {
   display: none;
   position: fixed;
-  z-index: 100;
+  z-index: 2000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
 }
 
 .admin-modal-content {
   background-color: var(--card-bg);
-  margin: 15% auto;
-  padding: 30px;
-  border-radius: 20px;
-  width: 300px;
+  margin: 15vh auto;
+  padding: 40px;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 320px;
   text-align: center;
   position: relative;
   box-shadow: var(--shadow);
 }
 
-.admin-modal-content h3 {
-  margin-top: 0;
-  color: var(--primary-color);
-}
-
 .admin-modal-content input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin: 20px 0;
-  border-radius: 10px;
-  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  border: 1px solid var(--sub-color);
   background: var(--card-bg);
   color: var(--text-color);
   box-sizing: border-box;
@@ -135,44 +187,11 @@ h1 {
 .close-btn {
   position: absolute;
   right: 20px;
-  top: 10px;
+  top: 15px;
   font-size: 24px;
   cursor: pointer;
-  color: var(--text-color);
 }
 
-/* 실제 파일 input 숨김 */
 input[type="file"] {
   display: none;
-}
-
-/* 업로드 이미지 */
-img {
-  margin-top: 20px;
-  max-width: 100%;
-  border-radius: 15px;
-  display: none;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-/* 결과 텍스트 */
-#result {
-  margin-top: 20px;
-  font-size: 16px;
-  color: var(--text-color);
-  text-align: left;
-  line-height: 1.5;
-}
-
-/* 관리자 확인 중 메시지 */
-#result.pending {
-  color: var(--primary-color);
-  font-style: italic;
-}
-
-/* 로딩 메시지 */
-.loading {
-  margin-top: 15px;
-  color: var(--primary-color);
-  font-size: 14px;
 }
