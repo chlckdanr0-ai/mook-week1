@@ -36,7 +36,7 @@ async function processImage(event) {
         }
 
         try {
-            // Gemini AI 모델 실행 (수정된 부분: 모델 이름 변경)
+            // Gemini AI 모델 실행 (최신 모델 이름 적용)
             const genAI = new GoogleGenerativeAI(API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 

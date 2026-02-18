@@ -6,8 +6,8 @@
           <title>꽃 이름 식별기</title>
           <link rel="stylesheet" href="style.css">
           
-          <!-- main.js에서 직접 AI 모듈을 import 하므로 이 부분은 삭제합니다. -->
-          <script type="module" src="main.js"></script>
+          <!-- 이제 새로운 main_v2.js 파일을 사용하도록 변경합니다. -->
+          <script type="module" src="main_v2.js"></script>
           
       </head>
       <body>
@@ -30,17 +30,6 @@
               <div id="result" style="display: none;">
                   <h2 id="flower-name-display">결과</h2>
                   <p id="flower-description">설명</p>
-              </div>
-
-              <!-- 제휴 문의 폼 -->
-              <div class="contact-section">
-                  <hr class="divider">
-                  <h3>🤝 제휴 및 서비스 문의</h3>
-                  <form action="https://formspree.io/f/mpqjlqge" method="POST" class="contact-form">
-                      <input type="email" name="email" placeholder="이메일 주소를 입력해 주세요" required>
-                      <textarea name="message" placeholder="문의하실 내용을 입력해 주세요" required></textarea>
-                      <button type="submit" class="upload-btn" style="width: 100%; border: none;">문의하기</button>
-                  </form>
               </div>
       
           </div>
